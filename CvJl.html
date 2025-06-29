@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Jean-Louis Likula Basomboli</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .print-button:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .cv-container {
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            padding-left: 15mm; /* Espace à gauche pour la reliure */
+        }
+        
+        .cv-content {
+            display: grid;
+            grid-template-columns: 65mm 1fr;
+            height: 100%;
+        }
+        
+        .sidebar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--secondary-color);
+            object-fit: cover;
+            margin: 0 auto 15px;
+            display: block;
+            background-color: #eee;
+            overflow: hidden;
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .placeholder-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 12px;
+            color: #777;
+        }
+        
+        .name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .job-title {
+            font-size: 14px;
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info {
+            margin-bottom: 25px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .info-item i {
+            width: 25px;
+            color: var(--secondary-color);
+            font-size: 14px;
+        }
+        
+        .info-text {
+            font-size: 13px;
+            margin-left: 10px;
+        }
+        
+        .qr-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .qr-code {
+            width: 120px;
+            height: 120px;
+            background-color: white;
+            margin: 0 auto 10px;
+            padding: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .qr-title {
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: var(--light-color);
+        }
+        
+        .section-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        .language-item {
+            margin-bottom: 10px;
+        }
+        
+        .language-name {
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        
+        .language-level {
+            display: flex;
+            height: 5px;
+        }
+        
+        .level-bar {
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin-right: 2px;
+            flex: 1;
+        }
+        
+        .level-bar.filled {
+            background-color: var(--secondary-color);
+        }
+        
+        .main-content {
+            padding: 30px 20px 20px 30px;
+        }
+        
+        .main-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .main-subtitle {
+            font-size: 16px;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+        
+        .main-section {
+            margin-bottom: 25px;
+        }
+        
+        .main-section-title {
+            font-size: 16px;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .main-section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .education-item, .skill-item {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .education-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .education-date {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .education-degree {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        
+        .education-school {
+            font-size: 13px;
+            color: var(--text-color);
+        }
+        
+        .skill-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        
+        .skill-description {
+            font-size: 13px;
+            color: var(--text-color);
+        }
+        
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: #eee;
+            margin: 20px 0;
+        }
+        
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            
+            .cv-container {
+                box-shadow: none;
+                margin: 0;
+            }
+            
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="generatePDF()">Télécharger PDF</button>
+    
+    <div class="cv-container" id="cv">
+        <div class="cv-content">
+            <div class="sidebar">
+                <div class="profile">
+                    <div class="profile-img">
+                        <img id="profile-picture" src="jeanlouis.png" alt="Jean-Louis Likula Basomboli">
+                    </div>
+                    <h1 class="name">Jean-Louis Likula Basomboli</h1>
+                    <div class="job-title">Développeur Web & Étudiant en Informatique</div>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="section-title">Contact</div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="info-text">8ème Avenue, commune Tshopo, N°88, Kisangani</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="info-text">+243 848 777 730</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="info-text">likulajeanlouis01@gmail.com</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-calendar"></i>
+                        <div class="info-text">Né le 01/04/2003</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-user"></i>
+                        <div class="info-text">Congolais, Célibataire</div>
+                    </div>
+                </div>
+                
+                <div class="languages">
+                    <div class="section-title">Langues</div>
+                    
+                    <div class="language-item">
+                        <div class="language-name">Français</div>
+                        <div class="language-level">
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-item">
+                        <div class="language-name">Swahili</div>
+                        <div class="language-level">
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-item">
+                        <div class="language-name">Lingala</div>
+                        <div class="language-level">
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar filled"></div>
+                            <div class="level-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="qr-section">
+                    <div class="qr-title">PORTFOLIO</div>
+                    <div class="qr-code">
+                        <div id="qrcode"></div>
+                    </div>
+                    <div class="info-text">Scannez pour voir mon portfolio</div>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <h1 class="main-title">JEAN-LOUIS LIKULA BASOMBOLI</h1>
+                <div class="main-subtitle">Développeur Web & Étudiant en Informatique</div>
+                
+                <div class="main-section">
+                    <h2 class="main-section-title">Profil</h2>
+                    <p style="font-size: 14px; line-height: 1.5; color: var(--text-color);">
+                        Étudiant en informatique passionné par le développement web et les nouvelles technologies. 
+                        Je suis rigoureux, motivé et toujours à la recherche de nouveaux défis pour approfondir mes connaissances 
+                        et compétences techniques. Mon expérience en développement web me permet de créer des solutions 
+                        modernes et efficaces.
+                    </p>
+                </div>
+                
+                <div class="main-section">
+                    <h2 class="main-section-title">Formation</h2>
+                    
+                    <div class="education-item">
+                        <div class="education-date">2023 - Présent</div>
+                        <div class="education-degree">Études en Informatique</div>
+                        <div class="education-school">Institut Supérieur de Commerce de Kisangani (ISC/KIS)</div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="education-date">2022</div>
+                        <div class="education-degree">Diplôme d'État en Sciences</div>
+                        <div class="education-school">Collège Maele, Kisangani</div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="education-date">2014</div>
+                        <div class="education-degree">Certificat d'Études Primaires</div>
+                        <div class="education-school">École Primaire Okapi, Kisangani</div>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="main-section">
+                    <h2 class="main-section-title">Compétences techniques</h2>
+                    
+                    <div class="skill-item">
+                        <div class="skill-name">Développement Web Front-End</div>
+                        <div class="skill-description">
+                            Maîtrise des langages HTML5, CSS3 et JavaScript. Création d'interfaces utilisateur modernes, 
+                            responsives et interactives.
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-name">Développement Back-End</div>
+                        <div class="skill-description">
+                            Utilisation de Supabase pour la gestion de bases de données et l'authentification. 
+                            Intégration d'APIs pour le développement d'applications dynamiques.
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-name">Recherche et Veille Technologique</div>
+                        <div class="skill-description">
+                            Capacité à rechercher efficacement des informations sur le web. 
+                            Veille technologique continue pour rester à jour sur les nouvelles tendances du développement web.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="main-section">
+                    <h2 class="main-section-title">Qualités personnelles</h2>
+                    
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                        <div style="background-color: var(--primary-color); color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Créativité</div>
+                        <div style="background-color: var(--primary-color); color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Résolution de problèmes</div>
+                        <div style="background-color: var(--primary-color); color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Travail d'équipe</div>
+                        <div style="background-color: var(--primary-color); color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Autonomie</div>
+                        <div style="background-color: var(--primary-color); color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Adaptabilité</div>
+                        <div style="background-color: var(--primary-color); color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Rigueur</div>
+                    </div>
+                </div>
+                
+                <div class="main-section" style="margin-top: 20px;">
+                    <h2 class="main-section-title">Centres d'intérêt</h2>
+                    
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
+                        <div style="display: flex; align-items: center; font-size: 13px;">
+                            <i class="fas fa-laptop-code" style="color: var(--secondary-color); margin-right: 8px;"></i>
+                            Nouvelles technologies
+                        </div>
+                        <div style="display: flex; align-items: center; font-size: 13px;">
+                            <i class="fas fa-book" style="color: var(--secondary-color); margin-right: 8px;"></i>
+                            Lecture
+                        </div>
+                        <div style="display: flex; align-items: center; font-size: 13px;">
+                            <i class="fas fa-lightbulb" style="color: var(--secondary-color); margin-right: 8px;"></i>
+                            Innovation
+                        </div>
+                        <div style="display: flex; align-items: center; font-size: 13px;">
+                            <i class="fas fa-users" style="color: var(--secondary-color); margin-right: 8px;"></i>
+                            Projets collaboratifs
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Portfolio URL - Remplacez par votre URL de portfolio
+        const portfolioUrl = "https://portfolio-jeanlouis-likula.onrender.com/";
+        
+        // Fonction pour gérer les erreurs d'image
+        function handleImageError() {
+            document.getElementById('profile-picture').style.display = 'none';
+            const placeholderDiv = document.createElement('div');
+            placeholderDiv.className = 'placeholder-text';
+            placeholderDiv.textContent = 'Photo non disponible';
+            document.querySelector('.profile-img').appendChild(placeholderDiv);
+        }
+        
+        // Gestion des erreurs pour l'image de profil
+        document.getElementById('profile-picture').onerror = handleImageError;
+        
+        // Génération du QR Code
+        document.addEventListener('DOMContentLoaded', function() {
+            // Créer le QR code
+            new QRCode(document.getElementById("qrcode"), {
+                text: portfolioUrl,
+                width: 110,
+                height: 110,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        });
+        
+        // Fonction pour générer le PDF
+        function generatePDF() {
+            const element = document.getElementById('cv');
+            const opt = {
+                margin: 0,
+                filename: 'CV_Jean-Louis_Likula_Basomboli.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            // Générer le PDF
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
