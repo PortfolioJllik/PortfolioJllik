@@ -1260,10 +1260,7 @@ iframe {
     </style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="loader"></div>
-    </div>
+
 
     <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
@@ -1617,17 +1614,12 @@ iframe {
 
     <!-- Main Script -->
     <script>
-// Preloader
+// Initialisation sans preloader
 window.addEventListener('load', function() {
-    const preloader = document.querySelector('.preloader');
-    setTimeout(function() {
-        preloader.classList.add('hide');
-        
-        // Déclencher un événement personnalisé pour signaler que le preloader est terminé
-        const event = new CustomEvent('preloaderComplete');
-        document.dispatchEvent(event);
-    }, 1000);
-
+    // Déclencher directement l'événement pour signaler que tout est prêt à charger
+    const event = new CustomEvent('preloaderComplete');
+    document.dispatchEvent(event);
+    
     // Initialize AOS
     AOS.init({
         duration: 800,
@@ -1636,6 +1628,10 @@ window.addEventListener('load', function() {
         mirror: false
     });
 });
+
+// Déclencher également l'événement immédiatement pour les scripts qui s'exécutent avant le chargement complet
+document.dispatchEvent(new CustomEvent('preloaderComplete'));
+
 
 
         // Mobile Navigation
@@ -1947,11 +1943,13 @@ const loadProfileImage = () => {
     loadOptimizedImage(imagePath, aboutImageContainer, aboutLoading, 500, false);
 };
 
-// Exécuter le chargement de l'image après que le reste du site soit chargé
-window.addEventListener('load', function() {
-    // Attendre un peu que le préchargeur disparaisse
-    setTimeout(loadProfileImage, 1500);
-});
+// Exécuter le chargement de l'image immédiatement
+window.addEventListener('load', loadProfileImage);
+// Exécuter également dès maintenant au cas où le DOM est déjà chargé
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    loadProfileImage();
+}
+
 
     </script>
 
@@ -2114,11 +2112,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Écouter l'événement personnalisé que nous allons déclencher après le preloader
     document.addEventListener('preloaderComplete', initProjectIframes);
     
-    // Vérifier si le preloader est déjà caché (au cas où l'événement aurait déjà été déclenché)
-    const preloader = document.querySelector('.preloader');
-    if (preloader && preloader.classList.contains('hide')) {
-        initProjectIframes();
-    }
+// Initialiser directement les iframes car il n'y a plus de preloader
+initProjectIframes();
+
 });
 </script>
 
